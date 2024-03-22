@@ -6,8 +6,7 @@
 </head>  
 <body>  
 <h1>JSP CRUD Example</h1>  
-<a href="adduserform.jsp">Add User</a>  
-<a href="view.jsp">View Users</a>  
-  
+<a href="employee-form.jsp">Add User</a>  
+<a href="<%=request.getContextPath()%>/getAll">View Users</a>  
 </body>  
 </html>  
