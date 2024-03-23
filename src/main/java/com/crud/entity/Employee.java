@@ -12,7 +12,7 @@ public class Employee {
 	
 	private Integer age;
 	
-	private String salary;
+	private Double salary;
 	
 	private LocalDate birthDate;
 	
@@ -20,7 +20,7 @@ public class Employee {
 		
 	}
 	
-	public Employee(String name, String skills, Integer age, String salary, LocalDate birthDate) {
+	public Employee(String name, String skills, Integer age, Double salary, LocalDate birthDate) {
 		super();
 		this.name = name;
 		this.skills = skills;
@@ -67,11 +67,11 @@ public class Employee {
 				+ ", salary=" + salary + ", birthDate=" + birthDate + "]";
 	}
 
-	public String getSalary() {
+	public Double getSalary() {
 		return salary;
 	}
 
-	public void setSalary(String salary) {
+	public void setSalary(Double salary) {
 		this.salary = salary;
 	}
 

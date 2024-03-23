@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.crud.entity.Employee;
+import com.crud.exception.CustomException;
 import com.crud.service.EmployeeService;
 import com.crud.service.EmployeeServiceImpl;
 
@@ -37,24 +38,24 @@ public class EmployeeServlet extends HttpServlet {
 		System.out.println(action);
 		try {
 			switch (action) {
-				case "/insert":
-					insertEmployee(request, response);
-					break;
-				case "/update":
-					updateEmployee(request, response);
-					break;
-				case "/edit":
-					selectEmployee(request, response);
-					break;
-				case "/delete":
-					deleteEmployee(request, response);
-					break;
-				case "/new":
-					showEmployeeForm(request, response);
-					break;
-				default:
-					getAllEmployees(request, response);
-					break;
+			case "/insert":
+				insertEmployee(request, response);
+				break;
+			case "/update":
+				updateEmployee(request, response);
+				break;
+			case "/edit":
+				selectEmployee(request, response);
+				break;
+			case "/delete":
+				deleteEmployee(request, response);
+				break;
+			case "/new":
+				showEmployeeForm(request, response);
+				break;
+			default:
+				getAllEmployees(request, response);
+				break;
 			}
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
@@ -84,23 +85,28 @@ public class EmployeeServlet extends HttpServlet {
 
 	protected void insertEmployee(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		String name = request.getParameter("name");
-		//String skills = request.getParameter("skills");
-		int age = Integer.parseInt(request.getParameter("age"));
-		String salary = request.getParameter("salary");
+		Integer age = Integer.parseInt(request.getParameter("age"));
+		Double salary = Double.valueOf(request.getParameter("salary"));
 		LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
-		String[] arraySkills = request.getParameterValues("skills");
-		String skills = String.join(",", arraySkills);
+		String skills = "";
+		if(request.getParameterValues("skills")!=null) {
+			String[] arraySkills  = request.getParameterValues("skills");
+			skills = String.join(",", arraySkills);
+		}		
 		Employee employee = new Employee(name, skills, age, salary, birthDate);
-
 		try {
-			empService.insertEmployee(employee);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		response.sendRedirect("getAll");
+			empService.insertEmployee(employee);
+			response.sendRedirect("getAll");
+		} catch (Exception e) {
+			System.out.println(e);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee-form.jsp");
+			request.setAttribute("employee", employee);
+			request.setAttribute("errorMessage", e.getMessage());
+			dispatcher.forward(request, response);
+		}
 
 	}
 
@@ -108,28 +114,39 @@ public class EmployeeServlet extends HttpServlet {
 			throws ServletException, IOException, SQLException {
 		Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		String name = request.getParameter("name");
-		String skills = request.getParameter("skills");
 		int age = Integer.parseInt(request.getParameter("age"));
-
-		String salary = request.getParameter("salary");
+		System.out.println(request.getParameter("age"));
+		Double salary = Double.valueOf(request.getParameter("salary"));
 		LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
-
+		String skills = "";
+		if(request.getParameterValues("skills")!=null) {
+			String[] arraySkills  = request.getParameterValues("skills");
+			skills = String.join(",", arraySkills);
+		}
 		Employee employee = new Employee(name, skills, age, salary, birthDate);
 		employee.setEmployeeId(employeeId);
-		empService.updateEmployee(employee);
-		response.sendRedirect("getAll");
+		try {
+
+			empService.updateEmployee(employee);
+			response.sendRedirect("getAll");
+		} catch (CustomException e) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee-form.jsp");
+			request.setAttribute("employee", employee);
+			request.setAttribute("errorMessage", e.getMessage());
+			dispatcher.forward(request, response);
+		}
 
 	}
 
 	protected void selectEmployee(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
-			Employee existingemployee = empService.selectEmployee(employeeId);
-			System.out.println(existingemployee.toString());
-			RequestDispatcher dispatcher = request.getRequestDispatcher("employee-form.jsp");
-			request.setAttribute("employee", existingemployee);
-			dispatcher.forward(request, response);
-			
+		Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		Employee existingemployee = empService.selectEmployee(employeeId);
+		System.out.println(existingemployee.toString());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("employee-form.jsp");
+		request.setAttribute("employee", existingemployee);
+		dispatcher.forward(request, response);
+
 	}
 
 	protected void deleteEmployee(HttpServletRequest request, HttpServletResponse response)
