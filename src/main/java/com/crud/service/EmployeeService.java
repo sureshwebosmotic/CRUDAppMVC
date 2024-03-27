@@ -1,19 +1,25 @@
 package com.crud.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.crud.entity.Employee;
 import com.crud.exception.CustomException;
 
+// This is EmployeeService interface which is use to define service methods.
 public interface EmployeeService {
-	public Employee insertEmployee(Employee employee) throws Exception;
-	
+
+	// save the employee.
+	public Employee insertEmployee(Employee employee) throws CustomException;
+
+	// retrieve all the employees.
 	public List<Employee> getAllEmployee();
-	
+
+	// retrieve the employee by employeeId
 	public Employee selectEmployee(Integer employeeId);
-	
-	public boolean deleteEmployee(Integer employeeId) throws SQLException;
-	
-	public boolean updateEmployee(Employee employee) throws SQLException, CustomException;
+
+	// delete the employee by employeeId
+	public boolean deleteEmployee(Integer employeeId);
+
+	// update the employee
+	public boolean updateEmployee(Employee employee) throws CustomException;
 }

@@ -3,6 +3,8 @@ package com.crud.servlet;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,14 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.crud.entity.Employee;
+import com.crud.entity.Skill;
 import com.crud.exception.CustomException;
 import com.crud.service.EmployeeService;
 import com.crud.service.EmployeeServiceImpl;
 
-@WebServlet("/")
+//This is a Servlet class which takes the request, process it, generate the response and forward it to the Jsp page.
 public class EmployeeServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
 	private EmployeeService empService;
 
 	public void init() {
@@ -32,6 +34,7 @@ public class EmployeeServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	// This method is use to call the appropriate method based on path.
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getServletPath();
@@ -58,13 +61,10 @@ public class EmployeeServlet extends HttpServlet {
 				break;
 			}
 		} catch (ServletException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -90,24 +90,24 @@ public class EmployeeServlet extends HttpServlet {
 		Integer age = Integer.parseInt(request.getParameter("age"));
 		Double salary = Double.valueOf(request.getParameter("salary"));
 		LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
-		String skills = "";
-		if(request.getParameterValues("skills")!=null) {
-			String[] arraySkills  = request.getParameterValues("skills");
-			skills = String.join(",", arraySkills);
-		}		
+		List<Skill> skills = new ArrayList<>();
+		if (request.getParameterValues("skills") != null) {
+			String[] arraySkills = request.getParameterValues("skills");
+			for (int i = 0; i < arraySkills.length; i++) {
+				Skill skill = new Skill(arraySkills[i]);
+				skills.add(skill);
+			}
+		}
 		Employee employee = new Employee(name, skills, age, salary, birthDate);
 		try {
-
 			empService.insertEmployee(employee);
 			response.sendRedirect("getAll");
 		} catch (Exception e) {
-			System.out.println(e);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("employee-form.jsp");
 			request.setAttribute("employee", employee);
 			request.setAttribute("errorMessage", e.getMessage());
 			dispatcher.forward(request, response);
 		}
-
 	}
 
 	protected void updateEmployee(HttpServletRequest request, HttpServletResponse response)
@@ -115,13 +115,16 @@ public class EmployeeServlet extends HttpServlet {
 		Integer employeeId = Integer.parseInt(request.getParameter("employeeId"));
 		String name = request.getParameter("name");
 		int age = Integer.parseInt(request.getParameter("age"));
-		System.out.println(request.getParameter("age"));
 		Double salary = Double.valueOf(request.getParameter("salary"));
 		LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
-		String skills = "";
-		if(request.getParameterValues("skills")!=null) {
-			String[] arraySkills  = request.getParameterValues("skills");
-			skills = String.join(",", arraySkills);
+		List<Skill> skills = new ArrayList<>();
+		if (request.getParameterValues("skills") != null) {
+			String[] arraySkills = request.getParameterValues("skills");
+			for (int i = 0; i < arraySkills.length; i++) {
+				Skill skill = new Skill(arraySkills[i], employeeId);
+				skills.add(skill);
+			}
+			;
 		}
 		Employee employee = new Employee(name, skills, age, salary, birthDate);
 		employee.setEmployeeId(employeeId);

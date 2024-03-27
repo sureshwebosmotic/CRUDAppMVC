@@ -1,26 +1,38 @@
 package com.crud.entity;
 
 import java.time.LocalDate;
+// This is a Employee Entity Class.
+import java.util.List;
 
 public class Employee {
-	
+
 	private Integer employeeId;
-	
+
 	private String name;
-	
-	private String skills;
-	
+
+	private List<Skill> skills;
+
 	private Integer age;
-	
+
 	private Double salary;
-	
+
 	private LocalDate birthDate;
-	
-	public Employee() {
-		
+
+	private String responseSkill;
+
+	public String getResponseSkill() {
+		return responseSkill;
 	}
-	
-	public Employee(String name, String skills, Integer age, Double salary, LocalDate birthDate) {
+
+	public void setResponseSkill(String responseSkill) {
+		this.responseSkill = responseSkill;
+	}
+
+	public Employee() {
+
+	}
+
+	public Employee(String name, List<Skill> skills, Integer age, Double salary, LocalDate birthDate) {
 		super();
 		this.name = name;
 		this.skills = skills;
@@ -45,11 +57,11 @@ public class Employee {
 		this.name = name;
 	}
 
-	public String getSkills() {
+	public List<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(String skills) {
+	public void setSkills(List<Skill> skills) {
 		this.skills = skills;
 	}
 
@@ -63,8 +75,8 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", name=" + name + ", skills=" + skills + ", age=" + age
-				+ ", salary=" + salary + ", birthDate=" + birthDate + "]";
+		return "Employee employeeId=" + employeeId + ", name=" + name + ", skills=" + skills + ", age=" + age
+				+ ", salary=" + salary + ", birthDate=" + birthDate + "";
 	}
 
 	public Double getSalary() {
