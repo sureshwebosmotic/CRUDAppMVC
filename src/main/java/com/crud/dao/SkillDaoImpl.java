@@ -18,13 +18,15 @@ public class SkillDaoImpl implements SkillDao {
 	// and do the necessary operations.
 	public static Connection getConnection() {
 		Connection connection = null;
-		try {
+		try 
+		{
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
-		} catch (Exception e) {
+		} catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
-		return connection;
+			return connection;
 	}
 
 	// save the skill.
@@ -32,16 +34,16 @@ public class SkillDaoImpl implements SkillDao {
 		String INSERT_SKILL_SQL = "INSERT INTO skill" + "  (name, employee_fid) VALUES " + " (?, ?);";
 		int result = 0;
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SKILL_SQL);) {
+			 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_SKILL_SQL);) 
+		{
 			preparedStatement.setString(1, skill.getName());
 			preparedStatement.setInt(2, skill.getEmployeeId());
-
 			result = preparedStatement.executeUpdate();
-
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		return result;
+			return result;
 	}
 
 	@Override
@@ -49,7 +51,8 @@ public class SkillDaoImpl implements SkillDao {
 		List<Skill> list = new ArrayList<>();
 
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement("select * from skill");) {
+			 PreparedStatement preparedStatement = connection.prepareStatement("select * from skill");) 
+		{
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Skill skill = new Skill();
@@ -59,10 +62,11 @@ public class SkillDaoImpl implements SkillDao {
 				;
 				list.add(skill);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		return list;
+			return list;
 	};
 
 	@Override
@@ -72,10 +76,11 @@ public class SkillDaoImpl implements SkillDao {
 		List<Skill> skills = new ArrayList<>();
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
-				// Step 2:Create a statement using connection object
-				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SKILL_BY_ID);) {
+			 // Step 2:Create a statement using connection object
+			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SKILL_BY_ID);) 
+		{
 			preparedStatement.setInt(1, employeeId);
-			// System.out.println(preparedStatement);
+
 			// Step 3: Execute the query or update query
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -87,39 +92,44 @@ public class SkillDaoImpl implements SkillDao {
 				Skill skill = new Skill(skillId, name, employeeId);
 				skills.add(skill);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 
-		return skills;
+			return skills;
 	}
 
 	@Override
 	public boolean updateSkill(Skill skill) {
 		String UPDATE_SKILL_SQL = "update employee set name = ? where skill_id = ?;";
-
 		boolean rowUpdated = false;
+		
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SKILL_SQL);) {
+			 PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SKILL_SQL);) 
+		{
 			preparedStatement.setString(1, skill.getName());
 			rowUpdated = preparedStatement.executeUpdate() > 0;
 			return rowUpdated;
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		return rowUpdated;
+			return rowUpdated;
 	}
 
 	@Override
 	public boolean deleteSkill(int id) {
 		String DELETE_SKILL_SQL = "delete from skill where skill_id = ?;";
-
 		boolean rowDeleted = false;
+		
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SKILL_SQL);) {
+			 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SKILL_SQL);) 
+		{
 			preparedStatement.setInt(1, id);
 			rowDeleted = preparedStatement.executeUpdate() > 0;
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 		return rowDeleted;
@@ -128,15 +138,17 @@ public class SkillDaoImpl implements SkillDao {
 	@Override
 	public boolean deleteSkillByEmployeeId(int employeeId) {
 		String DELETE_SKILL_SQL = "delete from skill where employee_fid = ?;";
-
 		boolean rowDeleted = false;
+		
 		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SKILL_SQL);) {
+			 PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SKILL_SQL);) 
+		{
 			preparedStatement.setInt(1, employeeId);
 			rowDeleted = preparedStatement.executeUpdate() > 0;
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
-		return rowDeleted;
+			return rowDeleted;
 	}
 }

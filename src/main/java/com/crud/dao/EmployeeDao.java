@@ -15,7 +15,7 @@ public interface EmployeeDao {
 	List<Employee> getAllEmployees();
 
 	// save the employee.
-	int insertEmployee(Employee employee);
+	boolean insertEmployee(Employee employee);
 
 	// update the emplooyee
 	boolean updateEmployee(Employee employee);

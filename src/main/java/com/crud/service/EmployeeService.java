@@ -9,7 +9,7 @@ import com.crud.exception.CustomException;
 public interface EmployeeService {
 
 	// save the employee.
-	public Employee insertEmployee(Employee employee) throws CustomException;
+	public boolean insertEmployee(Employee employee) throws CustomException;
 
 	// retrieve all the employees.
 	public List<Employee> getAllEmployee();
@@ -21,5 +21,5 @@ public interface EmployeeService {
 	public boolean deleteEmployee(Integer employeeId);
 
 	// update the employee
-	public boolean updateEmployee(Employee employee) throws CustomException;
+	public void updateEmployee(Employee employee) throws CustomException;
 }

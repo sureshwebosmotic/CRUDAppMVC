@@ -9,24 +9,20 @@ public class Skill {
 	private Integer employeeId;
 
 	public Skill() {
-		super();
 	}
 
 	public Skill(String name, Integer employeeId) {
-		super();
 		this.name = name;
 		this.employeeId = employeeId;
 	}
 
 	public Skill(Integer id, String name, Integer employeeId) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.employeeId = employeeId;
 	}
 
 	public Skill(String name) {
-		super();
 		this.name = name;
 	}
 
@@ -58,5 +54,7 @@ public class Skill {
 	public String toString() {
 		return name;
 	}
+
+	
 
 }

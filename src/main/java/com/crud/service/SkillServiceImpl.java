@@ -25,7 +25,6 @@ public class SkillServiceImpl implements SkillService {
 				if (employee.getSkills().get(i).getName().equals(retrievedSkills.get(j).getName())) {
 					isSkillAdded = false;
 				}
-
 			}
 
 			if (isSkillAdded) {
@@ -41,7 +40,6 @@ public class SkillServiceImpl implements SkillService {
 				if (retrievedSkills.get(i).getName().equals(employee.getSkills().get(j).getName())) {
 					isSkillRemoved = false;
 				}
-
 			}
 
 			if (isSkillRemoved) {

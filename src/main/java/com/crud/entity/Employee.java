@@ -18,22 +18,10 @@ public class Employee {
 
 	private LocalDate birthDate;
 
-	private String responseSkill;
-
-	public String getResponseSkill() {
-		return responseSkill;
-	}
-
-	public void setResponseSkill(String responseSkill) {
-		this.responseSkill = responseSkill;
-	}
-
 	public Employee() {
-
 	}
 
 	public Employee(String name, List<Skill> skills, Integer age, Double salary, LocalDate birthDate) {
-		super();
 		this.name = name;
 		this.skills = skills;
 		this.age = age;
