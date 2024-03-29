@@ -2,6 +2,7 @@ package com.crud.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 import com.crud.dao.EmployeeDao;
 import com.crud.dao.EmployeeDaoImpl;
@@ -24,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> getAllEmployee() {
+	public Set<Employee> getAllEmployee() {
 		return employeeDao.getAllEmployees();
 	}
 

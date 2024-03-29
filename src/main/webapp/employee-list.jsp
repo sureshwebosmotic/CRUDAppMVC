@@ -40,16 +40,12 @@
 					<c:set var="modifiedSkill" value="${fn:replace(employee.skills,'[', '')}"/>
 					<c:set var="modifiedSkill" value="${fn:replace(modifiedSkill,']', '')}"/>  
 					<td>${modifiedSkill}</td>
-					<td><a
-						href="edit?employeeId=<c:out value='${employee.employeeId}' />">Edit</a></td>
-					<td><a
-						href="delete?employeeId=<c:out value='${employee.employeeId}' />">Delete</a></td>
+					<td><a href="edit?employeeId=<c:out value='${employee.employeeId}' />">Edit</a></td>
+					<td><a href="delete?employeeId=<c:out value='${employee.employeeId}' />">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </body>
 </head>
-
 </html>
-

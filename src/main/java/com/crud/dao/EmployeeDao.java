@@ -1,7 +1,6 @@
 package com.crud.dao;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Set;
 
 import com.crud.entity.Employee;
 
@@ -12,7 +11,7 @@ public interface EmployeeDao {
 	Employee selectEmployee(int employeeId);
 
 	// retrieve all the employees.
-	List<Employee> getAllEmployees();
+	Set<Employee> getAllEmployees();
 
 	// save the employee.
 	boolean insertEmployee(Employee employee);

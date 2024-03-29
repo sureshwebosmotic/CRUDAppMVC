@@ -1,6 +1,7 @@
 package com.crud.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.crud.dao.SkillDao;
 import com.crud.dao.SkillDaoImpl;
@@ -15,35 +16,19 @@ public class SkillServiceImpl implements SkillService {
 
 	@Override
 	public void updateSkill(Employee employee) throws CustomException {
-		List<Skill> retrievedSkills = skillDao.selectSkillsEmployeeId(employee.getEmployeeId());
-
+		Set<Skill> retrievedSkills = skillDao.selectSkillsEmployeeId(employee.getEmployeeId());
+		Set<Skill> employeeSkills = employee.getSkills();
 		// when new skill is added during edit
-		for (int i = 0; i < employee.getSkills().size(); i++) {
-			boolean isSkillAdded = true;
-			for (int j = 0; j < retrievedSkills.size(); j++) {
-
-				if (employee.getSkills().get(i).getName().equals(retrievedSkills.get(j).getName())) {
-					isSkillAdded = false;
-				}
-			}
-
-			if (isSkillAdded) {
-				skillDao.insertSkill(employee.getSkills().get(i));
+		for (Skill skill : employeeSkills) {
+			if (!retrievedSkills.contains(skill)) {
+				skillDao.insertSkill(skill);
 			}
 		}
 
 		// when any skill is removed during edit
-		for (int i = 0; i < retrievedSkills.size(); i++) {
-			boolean isSkillRemoved = true;
-			for (int j = 0; j < employee.getSkills().size(); j++) {
-
-				if (retrievedSkills.get(i).getName().equals(employee.getSkills().get(j).getName())) {
-					isSkillRemoved = false;
-				}
-			}
-
-			if (isSkillRemoved) {
-				skillDao.deleteSkill(retrievedSkills.get(i).getId());
+		for (Skill skill : retrievedSkills) {
+			if (!employeeSkills.contains(skill)) {
+				skillDao.deleteSkill(skill.getId());
 			}
 		}
 	}

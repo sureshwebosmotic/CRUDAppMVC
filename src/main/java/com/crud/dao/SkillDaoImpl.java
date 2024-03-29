@@ -1,13 +1,12 @@
 package com.crud.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.crud.entity.Skill;
 
@@ -47,8 +46,8 @@ public class SkillDaoImpl implements SkillDao {
 	}
 
 	@Override
-	public List<Skill> getAllSkills() {
-		List<Skill> list = new ArrayList<>();
+	public Set<Skill> getAllSkills() {
+		Set<Skill> list = new HashSet<>();
 
 		try (Connection connection = getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement("select * from skill");) 
@@ -70,10 +69,10 @@ public class SkillDaoImpl implements SkillDao {
 	};
 
 	@Override
-	public List<Skill> selectSkillsEmployeeId(int employeeId) {
+	public Set<Skill> selectSkillsEmployeeId(int employeeId) {
 		String SELECT_SKILL_BY_ID = "select * from skill where employee_fid =?";
 
-		List<Skill> skills = new ArrayList<>();
+		Set<Skill> skills = new HashSet<>();
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
 			 // Step 2:Create a statement using connection object

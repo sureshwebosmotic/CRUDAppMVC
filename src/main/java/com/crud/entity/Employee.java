@@ -2,7 +2,7 @@ package com.crud.entity;
 
 import java.time.LocalDate;
 // This is a Employee Entity Class.
-import java.util.List;
+import java.util.Set;
 
 public class Employee {
 
@@ -10,7 +10,7 @@ public class Employee {
 
 	private String name;
 
-	private List<Skill> skills;
+	private Set<Skill> skills;
 
 	private Integer age;
 
@@ -21,7 +21,7 @@ public class Employee {
 	public Employee() {
 	}
 
-	public Employee(String name, List<Skill> skills, Integer age, Double salary, LocalDate birthDate) {
+	public Employee(String name, Set<Skill> skills, Integer age, Double salary, LocalDate birthDate) {
 		this.name = name;
 		this.skills = skills;
 		this.age = age;
@@ -45,11 +45,11 @@ public class Employee {
 		this.name = name;
 	}
 
-	public List<Skill> getSkills() {
+	public Set<Skill> getSkills() {
 		return skills;
 	}
 
-	public void setSkills(List<Skill> skills) {
+	public void setSkills(Set<Skill> skills) {
 		this.skills = skills;
 	}
 

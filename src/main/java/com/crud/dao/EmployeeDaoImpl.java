@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,12 +51,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	// and do the necessary operations.
 	public static Connection getConnection() {
 		Connection connection = null;
-		try 
-		{
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
-		} catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 			return connection;
@@ -68,8 +68,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// Step 1: Establishing a Connection
 		try (Connection connection = getConnection();
 			 // Step 2:Create a statement using connection object
-			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EMPLOYEE_BY_ID);) 
-		{
+			 PreparedStatement preparedStatement = connection.prepareStatement(SELECT_EMPLOYEE_BY_ID);) {
 			preparedStatement.setInt(1, employeeId);
 			System.out.println(preparedStatement);
 			// Step 3: Execute the query or update query
@@ -79,8 +78,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee = setEmployeeFields(resultSet);
 			}
 			return employee;
-		} catch (SQLException e) 
-		{
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 			return employee;
@@ -88,22 +86,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public List<Employee> getAllEmployees() {
-		List<Employee> list = new ArrayList<>();
+	public Set<Employee> getAllEmployees() {
+		Set<Employee> employees = new HashSet<>();
 
 		try (Connection connection = getConnection();
-			 PreparedStatement preparedStatement = connection.prepareStatement("select * from employee");) 
-		{
+			 PreparedStatement preparedStatement = connection.prepareStatement("select * from employee");) 	{
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Employee employee = setEmployeeFields(resultSet);
-				list.add(employee);
+				employees.add(employee);
 			}
 		} catch (SQLException e) 
 		{
 			e.printStackTrace();
 		}
-			return list;
+			return employees;
 	}
 
 	@Override

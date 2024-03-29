@@ -1,8 +1,7 @@
 package com.crud.dao;
 
-import java.util.List;
+import java.util.Set;
 
-import com.crud.entity.Employee;
 import com.crud.entity.Skill;
 
 //This is a SkillDao Interface which defines Dao methods to perform database related operations.
@@ -12,10 +11,10 @@ public interface SkillDao {
 	int insertSkill(Skill skill);
 
 	// retrieve all the skills.
-	List<Skill> getAllSkills();
+	Set<Skill> getAllSkills();
 
 	// retrieve the skills by EmployeeId.
-	public List<Skill> selectSkillsEmployeeId(int employeeId);
+	public Set<Skill> selectSkillsEmployeeId(int employeeId);
 
 	// update the skill
 	boolean updateSkill(Skill skill);

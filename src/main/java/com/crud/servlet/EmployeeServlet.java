@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,15 +41,10 @@ public class EmployeeServlet extends HttpServlet {
 		int age = Integer.parseInt(request.getParameter("age"));
 		Double salary = Double.valueOf(request.getParameter("salary"));
 		LocalDate birthDate = LocalDate.parse(request.getParameter("birthDate"));
-		List<Skill> skills = new ArrayList<>();
+		Set<Skill> skills = new HashSet<>();
 		
 		if (request.getParameterValues("skills") != null) {
 			String[] arraySkills = request.getParameterValues("skills");
-			String arraySkillsId = request.getParameter("skillId");
-			System.out.println(arraySkillsId);
-//			for (int i = 0; i < arraySkillsId.length; i++) {
-//				System.out.println(arraySkillsId[i]);
-//			}
 			for (int i = 0; i < arraySkills.length; i++) {
 				Skill skill = new Skill(arraySkills[i], employeeId);
 				skills.add(skill);
@@ -107,7 +104,7 @@ public class EmployeeServlet extends HttpServlet {
 	}
 
 	protected void getAllEmployees(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Employee> employees = empService.getAllEmployee();
+		Set<Employee> employees = empService.getAllEmployee();
 		request.setAttribute("employees", employees);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("employee-list.jsp");
 		dispatcher.forward(request, response);

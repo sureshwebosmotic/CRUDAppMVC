@@ -1,6 +1,6 @@
 package com.crud.service;
 
-import java.util.List;
+import java.util.Set;
 
 import com.crud.entity.Employee;
 import com.crud.exception.CustomException;
@@ -12,7 +12,7 @@ public interface EmployeeService {
 	public boolean insertEmployee(Employee employee) throws CustomException;
 
 	// retrieve all the employees.
-	public List<Employee> getAllEmployee();
+	public Set<Employee> getAllEmployee();
 
 	// retrieve the employee by employeeId
 	public Employee selectEmployee(Integer employeeId);
